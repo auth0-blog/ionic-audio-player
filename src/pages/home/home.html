@@ -18,6 +18,7 @@
   </ng-template>
 
   <ion-list *ngIf="files.length && loggedIn">
+    <ion-list-header>Hello {{auth.user?.name}}</ion-list-header>
     <ng-container *ngFor="let file of files; let i = index">
       <ion-item text-wrap (click)="openFile(file, i)">
         <ion-icon color="primary" item-start name="musical-note"></ion-icon>{{ file.name }}
