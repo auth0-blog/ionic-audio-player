@@ -83,4 +83,11 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="2.0.5" />
     <engine name="ios" spec="~4.5.4" />
     <allow-navigation href="http://192.168.0.14:8100" />
+    <plugin name="cordova-plugin-customurlscheme" spec="^4.3.0">
+        <variable name="URL_SCHEME" value="io.ionic.starter" />
+        <variable name="ANDROID_SCHEME" value="io.ionic.starter" />
+        <variable name="ANDROID_HOST" value="bk-tmp.auth0.com" />
+        <variable name="ANDROID_PATHPREFIX" value="/cordova/io.ionic.starter/callback" />
+    </plugin>
+    <plugin name="cordova-plugin-safariviewcontroller" spec="^1.5.4" />
 </widget>

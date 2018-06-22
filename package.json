@@ -30,9 +30,11 @@
     "@types/auth0-js": "^8.11.2",
     "auth0-js": "^9.6.1",
     "cordova-ios": "4.5.4",
+    "cordova-plugin-customurlscheme": "^4.3.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.1.19",
+    "cordova-plugin-safariviewcontroller": "^1.5.4",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-whitelist": "^1.3.3",
     "ionic-angular": "3.9.2",
@@ -54,7 +56,14 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-ionic-keyboard": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-customurlscheme": {
+        "URL_SCHEME": "io.ionic.starter",
+        "ANDROID_SCHEME": "io.ionic.starter",
+        "ANDROID_HOST": "bk-tmp.auth0.com",
+        "ANDROID_PATHPREFIX": "/cordova/io.ionic.starter/callback"
+      },
+      "cordova-plugin-safariviewcontroller": {}
     },
     "platforms": [
       "ios"
