@@ -5,6 +5,7 @@ import {Subject} from 'rxjs';
 import {AUTH_CONFIG} from './auth.config';
 import Auth0Cordova from '@auth0/cordova';
 import * as auth0 from 'auth0-js';
+import { AlertController } from 'ionic-angular';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
   loading = true;
   isLoggedIn$ = new Subject();
 
-  constructor(public zone: NgZone, private storage: Storage) {
+  constructor(public zone: NgZone, private storage: Storage, private alertCtrl: AlertController) {
     this.storage.get('profile').then(user => (this.user = user));
     this.storage.get('access_token').then(token => (this.accessToken = token));
     this.storage.get('expires_at').then(exp => {
@@ -35,6 +36,13 @@ export class AuthService {
       // Authorize login request with Auth0: open login page and get auth results
       this.Client.authorize(options, (err, authResult) => {
         if (err) {
+          let alert = this.alertCtrl.create({
+            title: 'Low battery',
+            subTitle: JSON.stringify(err.original),
+            buttons: ['Dismiss']
+          });
+          alert.present();
+
           this.loading = false;
           reject(err);
         } else {
