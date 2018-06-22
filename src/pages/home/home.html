@@ -1,14 +1,60 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Audio Player</ion-title>
+    <ion-buttons end>
+      <button *ngIf="loggedIn" ion-button icon (click)="logout()">Logout</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <p *ngIf="auth.loading" text-center>Loading...</p>
+  <ng-template [ngIf]="!auth.loading || !loggedIn">
+    <div padding id="app-section" text-center>
+      <ion-icon color="primary" name="musical-notes"></ion-icon>
+      <h2 id="app-title">Audio Player</h2>
+      <button outline ion-button block color="primary" *ngIf="!loggedIn" (click)="login()">Log In</button>
+    </div>
+  </ng-template>
+
+  <ion-list *ngIf="files.length && loggedIn">
+    <ion-list-header>Hello {{auth.user.name}}</ion-list-header>
+    <ng-container *ngFor="let file of files; let i = index">
+      <ion-item text-wrap (click)="openFile(file, i)">
+        <ion-icon color="primary" item-start name="musical-note"></ion-icon>{{ file.name }}
+        <p item-end *ngIf="currentFile.index === i">SELECTED</p>
+        <ion-icon item-end name="play" *ngIf="currentFile.index !== i"></ion-icon>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+
 </ion-content>
+
+<ion-footer *ngIf="currentFile.file && loggedIn" [@showHide]="displayFooter">
+  <ion-toolbar color="primary">
+    <ion-range min="0" color="light" [max]="state.durationSec" [formControl]="seekbar" (ionFocus)="onSeekStart()" (ionBlur)="onSeekEnd($event)"
+               name="seekbar">
+      <ion-label color="light" range-left>{{ state.time }}</ion-label>
+      <ion-label color="light" range-right>{{ state.duration }}</ion-label>
+    </ion-range>
+  </ion-toolbar>
+
+  <ion-toolbar color="primary" padding>
+    <ion-grid>
+      <ion-row align-items-center id="media-controls">
+        <button clear ion-col ion-button [disabled]="isFirstPlaying()" (click)="previous()">
+          <ion-icon color="light" name="skip-backward"> </ion-icon>
+        </button>
+        <button clear ion-col ion-button *ngIf="!state.playing" (click)="play()">
+          <ion-icon color="light" name="play"></ion-icon>
+        </button>
+        <button clear ion-col ion-button *ngIf="!!state.playing" (click)="pause()">
+          <ion-icon color="light" name="pause"></ion-icon>
+        </button>
+        <button clear ion-col ion-button [disabled]="isLastPlaying()" (click)="next()">
+          <ion-icon color="light" name="skip-forward"></ion-icon>
+        </button>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
